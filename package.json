@@ -1,0 +1,17 @@
+{
+  "name": "rtsocket-server",
+  "version": "1.0.0",
+  "description": "> server class for rtsocket, a socket.io wrapper for real time communication between multiple endpoints",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SandroSalzmann/rtsocket-server.git"
+  },
+  "author": "Sandro Salzmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SandroSalzmann/rtsocket-server/issues"
+  },
+  "homepage": "https://github.com/SandroSalzmann/rtsocket-server#readme",
+  "dependencies": {}
+}
