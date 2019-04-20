@@ -1,6 +1,6 @@
 # rtsocket-server
 
-> server part of rtsocket, a socket.io wrapper for real time communication between multiple endpoints
+> server part of rtsocket, a socket.io wrapper that enables easy synchronization of a data source between multiple clients
 
 ## Usage
 
