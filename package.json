@@ -1,6 +1,6 @@
 {
   "name": "rtsocket-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> server class for rtsocket, a socket.io wrapper for real time communication between multiple endpoints",
   "main": "index.js",
   "repository": {
