@@ -157,12 +157,10 @@ A RTServer is the implementation of a RTServerConfiguration. You can actually ad
 let publicServer = new RTServer(publicServerConfig);
 
 io.on("connection", socket => {
-  // add a initial RTAuthentication with {} as permitted query attributes
-  // and 0 as permissions level to the socket
-  socket.RTAuthentication = new RTAuthentication({}, 0);
-
-  // add socket to the RTServer on connection
+  // add socket to the RTServer
   publicServer.addSocket(socket);
+  // this adds a default RTAuthenticator with {} as permitted query attributes
+  // and 0 as permissions level to the socket if it's current RTAuthentication is undefined
 });
 ```
 

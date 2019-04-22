@@ -1,3 +1,5 @@
+let RTAuthentication = require("./RTAuthentication");
+
 class RTServer {
   /**
    * Handles a part of a website with all read-, modifyrequests and permissions
@@ -12,12 +14,17 @@ class RTServer {
   }
 
   /**
-   * Adds read-, modify- and authenticationhandlers for a socket
+   * Adds read-, modify- and authenticationhandlers for a socket. Also adds a default RTAuthentication if needed
    * @param {*} socket Socket to add the handlers for
    * @memberof RTServer
    */
   addSocket(socket) {
     let { readDefinitions, modifyDefinitions, RTAuthenticator } = this;
+
+    if (socket.RTAuthentication === undefined) {
+      // add a default RTAuthentication with {} as permitted query attributes and 0 as permissions level
+      socket.RTAuthentication = new RTAuthentication({}, 0);
+    }
 
     RTAuthenticator.startAuthenticationHandler(socket, () => {
       // updates all subscriptions from authenticated socket when socket's authentication changes
