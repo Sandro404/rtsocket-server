@@ -77,6 +77,8 @@ A RTServerConfig is the configuration for a RTServer. It holds different read- a
 
 ```javascript
 // create a new RTServerConfig with this RTAuthenticator
+// a server config uses the default authenticator if none is given
+// default: new RTAuthenticator(() => new RTAuthentication({}, 0), () => {});
 let publicServerConfig = new RTServerConfig(publicAuthenticator);
 
 // and add a read definition to it
@@ -155,6 +157,10 @@ A RTServer is the implementation of a RTServerConfiguration. You can actually ad
 let publicServer = new RTServer(publicServerConfig);
 
 io.on("connection", socket => {
+  // add a initial RTAuthentication with {} as permitted query attributes
+  // and 0 as permissions level to the socket
+  socket.RTAuthentication = new RTAuthentication({}, 0);
+
   // add socket to the RTServer on connection
   publicServer.addSocket(socket);
 });

@@ -1,11 +1,16 @@
+let RTAuthenticator = require("./RTAuthenticator");
+let RTAuthentication = require("./RTAuthentication");
+
 class RTServerConfig {
   /**
-   * RTServer configuration with it's readdefinitions, modifydefinitions and rtauthenticator
+   * RTServer configuration with it's readdefinitions, modifydefinitions and rtauthenticator. Uses default rtauthenticator that returns {} as permitted query attributes, 0 as permissions level and an empty onAuthenticated function if it's undefined.
    * @class RTServerConfig
-   * @param {RTAuthenticator} RTAuthenticator RTAuthenticator to authenticate new sockets
+   * @param {RTAuthenticator} rtauthenticator RTAuthenticator to authenticate new sockets
    */
-  constructor(RTAuthenticator) {
-    this.RTAuthenticator = RTAuthenticator;
+  constructor(rtauthenticator) {
+    this.RTAuthenticator =
+      rtauthenticator ||
+      new RTAuthenticator(() => new RTAuthentication({}, 0), () => {});
     this.readDefinitions = [];
     this.modifyDefinitions = [];
   }
