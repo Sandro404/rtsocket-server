@@ -63,15 +63,19 @@ class RTModifyDefinition extends RTDefinition {
       if (!isPermitted) {
         results = "NO_PERMISSIONS_TO_MODIFY";
       } else {
-        let modifiedSuccessful = await modify(
-          queryAttributes,
-          socket.RTAuthentication.queryAttributes
-        );
-        if (modifiedSuccessful) {
-          results = "SUCCESSFUL_MODIFIED";
-          synchronizeClients(uuid);
-        } else {
-          results = "FAILED_TO_MODIFY";
+        try {
+          let modifiedSuccessful = await modify(
+            queryAttributes,
+            socket.RTAuthentication.queryAttributes
+          );
+          if (modifiedSuccessful) {
+            results = "SUCCESSFUL_MODIFIED";
+            synchronizeClients(uuid);
+          } else {
+            results = "FAILED_TO_MODIFY";
+          }
+        } catch {
+          results = "UNKNOWN_MODIFYING_ERROR";
         }
       }
       callback(results);
