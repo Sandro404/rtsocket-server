@@ -93,7 +93,13 @@ publicServerConfig.addReadDefinition(
         getType(
           type, 
           (results) => {
+            // different results are differently interpreted
+            // the following messages are sent for the results
+            // results == undefined --> "REQUESTED_ELEMENT_OR_LIST_NOT_FOUND" or "REQUESTED_ELEMENT_OR_LIST_DELETED" if it has sent some actual results before
+            // results == [] --> "REQUESTED_LIST_EMPTY"
+            // just the results are being sent in all other cases
             resolve(results);
+            // note: if the socket has no permissions, "NO_PERMISSIONS_TO_READ" is being sent
           },
           (error) => {
             reject("DB error");
@@ -124,11 +130,14 @@ publicServerConfig.addModifyDefinition(
       return new Promise((resolve, reject) => {
         deleteType(
           type, 
-          (results) => {
-            resolve(results);
+          (hasModifiedSuccessful) => {
+            // resolve with true if the modifying was successful, false if not
+            resolve(hasModifiedSuccessful);
+            // user gets "SUCCESSFUL_MODIFIED" if true and "FAILED_TO_MODIFY" is false
           },
           (error) => {
-            reject("DB error");
+            // if there is some error you can create a "UNKNOWN_MODIFYING_ERROR" for the user with reject
+            reject();
           })
       });
     },
