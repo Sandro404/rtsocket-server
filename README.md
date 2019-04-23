@@ -107,10 +107,11 @@ publicServerConfig.addReadDefinition(
       });
       return promise;
     },
-    // minimum permissions level needed
+    // [optional] minimum permissions level needed. default is 0
     GUEST,
-    // function that checks if the requested attributes are
-    // appropriate with the saved / permitted attributes
+    // [optional] function that checks if the requested attributes are
+    // suitable for the saved / permitted attributes.
+    // default is a function that always returns true
     (requestedAttributes, savedAttributes) => {
       return new Promise(resolve => {
         resolve(properAttributes(requestedAttributes, savedAttributes));
@@ -141,10 +142,11 @@ publicServerConfig.addModifyDefinition(
           })
       });
     },
-    // minimum permissions level needed
+    // [optional] minimum permissions level needed. default is 0
     ADMIN,
-    // function that checks if the requested attributes are
-    // appropriate with the saved / permitted attributes
+    // [optional] function that checks if the requested attributes are
+    // suitable for the saved / permitted attributes.
+    // default is a function that always returns true
     (requestedAttributes, savedAttributes) => {
       var promise = new Promise(resolve => {
         resolve(properAttributes(requestedAttributes, savedAttributes));
