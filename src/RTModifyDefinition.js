@@ -15,8 +15,8 @@ class RTModifyDefinition extends RTDefinition {
    * @class RTModifyDefinition
    * @extends {RTDefinition}
    * @param {String} name Human readable definiton name
-   * @param {Number} minPermissions Socket's mininum authentication permissions level
-   * @param {CheckRequestedQueryAttributesFunction} checkRequestedQueryAttributes Function to check socket's requested query attributes with serverside permitted saved ones //TODO: function definition
+   * @param {Number} minPermissions Socket's mininum authentication permissions level, if undefined 0
+   * @param {CheckRequestedQueryAttributesFunction} checkRequestedQueryAttributes Function to check socket's requested query attributes with serverside permitted saved ones, if undefined function that always returns true
    * @param {ModifyFunction} modify Modifies the datasource
    */
   constructor(name, modify, minPermissions, checkRequestedQueryAttributes) {

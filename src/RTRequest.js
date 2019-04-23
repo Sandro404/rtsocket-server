@@ -18,7 +18,7 @@ class RTRequest {
 
   /**
    * Gets the results and updates subscribers if needed
-   * @param {GetResultsFunction} getResults Function that gets the result from the datasource //TODO: function definition
+   * @param {GetResultsFunction} getResults Function that gets the result from the datasource
    * @param {String} sourceUuid Subscriber's uuid that shouldn't be updated
    */
   async synchronizeClients(getResults, sourceUuid) {

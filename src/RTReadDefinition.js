@@ -15,8 +15,8 @@ class RTReadDefinition extends RTDefinition {
    * @class RTReadDefinition
    * @extends {RTDefinition}
    * @param {String} name Human readable definiton name
-   * @param {Number} minPermissions Socket's minimum authentication permissions level
-   * @param {CheckRequestedQueryAttributesFunction} checkRequestedQueryAttributes Function to check socket's requested attributes with serverside permitted saved ones
+   * @param {Number} minPermissions Socket's minimum authentication permissions level, if undefined 0
+   * @param {CheckRequestedQueryAttributesFunction} checkRequestedQueryAttributes Function to check socket's requested attributes with serverside permitted saved ones, if undefined function that always returns true
    * @param {GetResultsFunction} getResults Function that gets the result from the datasource
    */
   constructor(name, getResults, minPermissions, checkRequestedQueryAttributes) {
