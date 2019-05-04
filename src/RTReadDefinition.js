@@ -75,7 +75,9 @@ class RTReadDefinition extends RTDefinition {
      */
     return async (uuid, queryAttributes) => {
       let request = requests.find(
-        request => JSON.stringify(request.queryAttributes) === JSON.stringify(queryAttributes)
+        request =>
+          JSON.stringify(request.queryAttributes) ===
+          JSON.stringify(queryAttributes)
       );
       // create a new request if no request with the same queryattributes found
       if (request === undefined) {
@@ -89,16 +91,37 @@ class RTReadDefinition extends RTDefinition {
         requests.push(request);
       }
       let subscriber = new RTSubscriber(socket, uuid);
-      // create unsubscribe handler for socket
-      socket.on("unsubscribe" + uuid, () => {
-        request.removeSubscriber(subscriber);
-        if (request.subscribers.length === 0) {
-          this.requests = this.requests.filter(
-            filterRequest => filterRequest !== request
-          );
-        }
-      });
+      // create unsubscribe and disconnect handler for socket
+      let removeSubscriberHandler = this.getRemoveSubscriberHandler(
+        request,
+        subscriber
+      );
+      socket.on("unsubscribe" + uuid, removeSubscriberHandler);
+      socket.on("disconnect", removeSubscriberHandler);
       request.initializeSubscriber(subscriber);
+    };
+  }
+
+  /**
+   * Creates a function to remove a subscriber from a request
+   * @param {RTRequest} request Request to remove the subscriber from
+   * @param {RTSubscriber} subscriber Subscriber to remove from the request
+   * @returns {RemoveSubscriberFunction} Function to remove a subscriber from a request
+   * @memberof RTReadDefinition
+   */
+  getRemoveSubscriberHandler(request, subscriber) {
+    /**
+     * Removes a subscriber from a request
+     * @name RemoveSubscriberFunction
+     * @function
+     */
+    return () => {
+      request.removeSubscriber(subscriber);
+      if (request.subscribers.length === 0) {
+        this.requests = this.requests.filter(
+          filterRequest => filterRequest !== request
+        );
+      }
     };
   }
 }
