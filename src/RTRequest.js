@@ -1,4 +1,5 @@
 let RTPermissions = require("./RTPermissions");
+let hash = require('object-hash');
 
 class RTRequest {
   /**
@@ -22,11 +23,13 @@ class RTRequest {
    * @param {String} sourceUuid Subscriber's uuid that shouldn't be updated
    */
   async synchronizeClients(getResults, sourceUuid) {
-    let { queryAttributes, lastResults, subscribers } = this;
+    let { queryAttributes, lastResultsHash, subscribers } = this;
 
     let results = await getResults(queryAttributes);
-    if (JSON.stringify(results) !== JSON.stringify(lastResults)) {
+    let resultsHash = hash(results || {});
+    if (resultsHash !== lastResultsHash) {
       this.lastResults = results;
+      this.lastResultsHash = resultsHash
       subscribers.forEach(subscriber => {
         if (subscriber.uuid !== sourceUuid) {
           this.updateSubscriber(subscriber);
@@ -64,7 +67,11 @@ class RTRequest {
 
     subscriber.update(
       lastResults,
-      new RTPermissions(minPermissions, checkRequestedQueryAttributes, queryAttributes)
+      new RTPermissions(
+        minPermissions,
+        checkRequestedQueryAttributes,
+        queryAttributes
+      )
     );
   }
 
@@ -92,8 +99,10 @@ class RTRequest {
    * @param {RTSubscriber} subscriberToRemove
    * @memberof RTRequest
    */
-  removeSubscriber(subscriberToRemove){
-    this.subscribers = this.subscribers.filter(subscriber => subscriber !== subscriberToRemove)
+  removeSubscriber(subscriberToRemove) {
+    this.subscribers = this.subscribers.filter(
+      subscriber => subscriber !== subscriberToRemove
+    );
   }
 
   /**

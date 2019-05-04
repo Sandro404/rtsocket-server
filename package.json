@@ -13,5 +13,7 @@
     "url": "https://github.com/SandroSalzmann/rtsocket-server/issues"
   },
   "homepage": "https://github.com/SandroSalzmann/rtsocket-server#readme",
-  "dependencies": {}
+  "dependencies": {
+    "object-hash": "^1.3.1"
+  }
 }
