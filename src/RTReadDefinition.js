@@ -75,7 +75,7 @@ class RTReadDefinition extends RTDefinition {
      */
     return async (uuid, queryAttributes) => {
       let request = requests.find(
-        request => request.queryAttributes === queryAttributes
+        request => JSON.stringify(request.queryAttributes) === JSON.stringify(queryAttributes)
       );
       // create a new request if no request with the same queryattributes found
       if (request === undefined) {
@@ -86,8 +86,8 @@ class RTReadDefinition extends RTDefinition {
         );
         // get data for request
         await request.initRequest(getResults);
+        requests.push(request);
       }
-      requests.push(request);
       let subscriber = new RTSubscriber(socket, uuid);
       // create unsubscribe handler for socket
       socket.on("unsubscribe" + uuid, () => {
