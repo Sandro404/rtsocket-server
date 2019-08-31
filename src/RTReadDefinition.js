@@ -70,10 +70,9 @@ class RTReadDefinition extends RTDefinition {
      * Adds a subscriber to the existing or new request for these query attributes
      * @name ReadHandlerFunction
      * @function
-     * @param {String} uuid Uuid for the new subscriber
-     * @param {Object} queryAttributes Query attributes for the reading query
+     * @param {Object} readingInformation Object with uuid and query attributes for the reading query
      */
-    return async (uuid, queryAttributes) => {
+    return async ({ uuid, queryAttributes }) => {
       let request = requests.find(
         request =>
           JSON.stringify(request.queryAttributes) ===
