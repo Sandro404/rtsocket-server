@@ -118,7 +118,7 @@ class RTReadDefinition extends RTDefinition {
       request.removeSubscriber(subscriber);
       if (request.subscribers.length === 0) {
         this.requests = this.requests.filter(
-          filterRequest => filterRequest !== request
+          JSON.stringify(filterRequest.queryAttributes) !== JSON.stringify(request.queryAttributes)
         );
       }
     };
